@@ -12,13 +12,13 @@
 //       }
 // export { spotifyApi }
 import SpotifyWebApi from 'spotify-web-api-js';
-import { token } from '../apiConfig';
+// import { token } from '../apiConfig';
 
 let spotify = new SpotifyWebApi();
 
 //var s = new spotify();
 
-spotify.setAccessToken(token)
+// spotify.setAccessToken(token)
 
 const spotifyApi = () => {
   spotify.getPlaylistTracks('37i9dQZEVXbMDoHDwVN2tF')
