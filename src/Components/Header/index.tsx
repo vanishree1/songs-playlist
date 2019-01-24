@@ -5,11 +5,12 @@ import { Navbar, Nav, Form, FormControl, Button } from 'react-bootstrap'
 interface headerProps {
   onChange: (e: any) => void;
   onSubmit: () => any;
+  keyword: string;
 }
 
 class Header extends Component<headerProps, {}> {
   render() {
-    const { onChange, onSubmit } = this.props;
+    const { onChange, onSubmit, keyword } = this.props;
     return (
       <div className="Header">
        <Navbar bg="light" expand="lg">
@@ -18,7 +19,7 @@ class Header extends Component<headerProps, {}> {
             <Navbar.Collapse>
               <Nav className="ml-auto">
                 <Form inline>
-                  <FormControl onChange={(e: any) => onChange(e)} type="text" placeholder="Search by name" className="mr-sm-2" />
+                  <FormControl value={keyword} onChange={(e: any) => onChange(e)} type="text" placeholder="Search by name" className="mr-sm-2" />
                   <Button variant="outline-secondary" onClick={onSubmit} >Search</Button>
                 </Form>
               </Nav>

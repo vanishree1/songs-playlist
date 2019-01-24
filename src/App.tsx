@@ -12,7 +12,7 @@ interface appStateInterface{
   topTunes : any,
   type: string,
   show: boolean,
-  musicInfo: any,
+  musicInfo: object,
   keyword: string
 }
 
@@ -25,7 +25,7 @@ class App extends Component<{}, appStateInterface> {
 
   componentDidMount(){
    ituneApi()
-      .then((item: any) => {
+      .then((item:  {feed: {entry: []}}) => {
         const topTunes = item.feed.entry
         this.setState({topTunes})
       })
@@ -33,24 +33,22 @@ class App extends Component<{}, appStateInterface> {
   }
 
   fetchTopTunes = (type: string) => {
+    // if(type === 'spotify') {
+    //   spotifyApi()
+    // }
     const api = type !== 'itune' ? spotifyApi : ituneApi
     this.setState({
       type
-    }, () => api()
+    }, () => ituneApi()
       .then((res) => {
-        console.log('status', res.error.status)
-        if(res.error) {
-          window.alert('Something went wrong!')
-        } else {
-          const topTunes = res.feed.entry
-          this.setState({topTunes})
-        }
+        const topTunes = res.feed.entry
+        this.setState({topTunes, keyword: ''})
       })
       .catch((err) => console.warn('err', err))
       )
   }
   
-  viewDetail = (row: any) => {
+  viewDetail = (row: object) => {
     this.setState({
       show: true,
       musicInfo: row
@@ -63,7 +61,7 @@ class App extends Component<{}, appStateInterface> {
     })
   }
 
-  onChnage = (event: any) => {
+  onChange = (event: any) => {
     const { value } = event.target;
     this.setState({
       keyword: value
@@ -83,10 +81,10 @@ class App extends Component<{}, appStateInterface> {
   }
 
   render() {
-    const { topTunes, type, show, musicInfo } = this.state
+    const { topTunes, type, show, musicInfo, keyword } = this.state
     return (
       <div className="App">
-       <Header onChange={this.onChnage} onSubmit={this.onSubmit} />
+       <Header onChange={this.onChange} onSubmit={this.onSubmit} keyword={keyword} />
        <BreadCrumb fetchTopTunes={this.fetchTopTunes} type={type} />
        <Table topTunes={topTunes}  viewDetail={this.viewDetail}/>
        <ViewModal show={show} handleClose={() => this.handleClose()} musicInfo={musicInfo}/>

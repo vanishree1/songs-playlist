@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory from 'react-bootstrap-table2-paginator';
 import { Container } from 'react-bootstrap';
+import "./table.scss"
 
 interface tablePropsInterface{
   topTunes: any
@@ -12,7 +13,7 @@ class Table extends Component <tablePropsInterface, {}>{
 
 
   rowEvents =   {
-    onClick: ({}, row: any, {}) => {
+    onClick: ({}, row: object, {}) => {
         this.props.viewDetail(row)
     }
   }
@@ -31,6 +32,9 @@ class Table extends Component <tablePropsInterface, {}>{
     }];
     return (
       <Container>
+        {
+        this.props.topTunes.length === 0 ?
+        'No data':
         <BootstrapTable 
           keyField='id.attributes.im:id' 
           data={ this.props.topTunes }
@@ -38,6 +42,9 @@ class Table extends Component <tablePropsInterface, {}>{
           rowEvents={ this.rowEvents }
           pagination={ paginationFactory() }
           />
+       
+      }
+        
       </Container>
     );
   }
