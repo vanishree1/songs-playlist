@@ -1,33 +1,44 @@
 import React, { Component } from 'react';
 import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory from 'react-bootstrap-table2-paginator';
+import { Container } from 'react-bootstrap';
+
+interface tablePropsInterface{
+  topTunes: any
+  viewDetail: (data: any) => void;
+}
+
+class Table extends Component <tablePropsInterface, {}>{
 
 
-class Table extends Component {
+  rowEvents =   {
+    onClick: ({}, row: any, {}) => {
+        this.props.viewDetail(row)
+    }
+  }
+
+
   render() {
-    const products = [{
-      id: 1,
-      name: "Product1",
-      price: 120
-  }, {
-      id: 2,
-      name: "Product2",
-      price: 80
-  }];
   const columns = [{
-  dataField: 'id',
-  text: 'Product ID'
-}, {
-  dataField: 'name',
-  text: 'Product Name'
-}, {
-  dataField: 'price',
-  text: 'Product Price'
-}];
+      dataField: 'im:name.label',
+      text: 'Song Name'
+    }, {
+      dataField: 'im:artist.label',
+      text: 'Artist'
+    }, {
+      dataField: 'im:price.label',
+      text: 'Price'
+    }];
     return (
-      <div className="Table">
-        <BootstrapTable keyField='id' data={ products } columns={ columns } pagination={ paginationFactory() } />
-      </div>
+      <Container>
+        <BootstrapTable 
+          keyField='id.attributes.im:id' 
+          data={ this.props.topTunes }
+          columns={ columns }
+          rowEvents={ this.rowEvents }
+          pagination={ paginationFactory() }
+          />
+      </Container>
     );
   }
 }

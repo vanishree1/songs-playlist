@@ -1,12 +1,17 @@
 import React, { Component } from 'react';
 import { Button, Jumbotron} from 'react-bootstrap';
 
-class BradCrumb extends Component {
+interface bradCrumbPropInterface {
+    fetchTopTunes: (type: string) => void; 
+    type: string
+}
+class BradCrumb extends Component<bradCrumbPropInterface, {}> {
   render() {
+    const { type, fetchTopTunes } = this.props
     return (
       <Jumbotron className="BradCrumb">
-        <Button variant="light"> Itune List</Button>
-        <Button variant="secondary"> Spotify List </Button>
+        <Button variant={type === 'itune' ? 'secondary' : 'light'} onClick={() => fetchTopTunes('itune')}> Itune List</Button>
+        <Button variant={type !== 'itune' ? 'secondary' : 'light'} onClick={() => fetchTopTunes('spotify')}> Spotify List </Button>
       </Jumbotron>
     )
   }
