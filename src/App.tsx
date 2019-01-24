@@ -39,8 +39,16 @@ class App extends Component<{}, appStateInterface> {
     const api = type !== 'itune' ? spotifyApi : ituneApi
     this.setState({
       type
-    }, () => ituneApi()
+    }, () => api()
       .then((res) => {
+        console.log('result?')
+        if(res.error){
+          this.setState({
+            topTunes: [],
+            keyword: ''
+          })
+          window.alert('Something went wrong')
+        }
         const topTunes = res.feed.entry
         this.setState({topTunes, keyword: ''})
       })
