@@ -1,39 +1,32 @@
 import React, { Component } from 'react';
-import { Table as ReactTable} from 'react-bootstrap';
+import BootstrapTable from 'react-bootstrap-table-next';
+import paginationFactory from 'react-bootstrap-table2-paginator';
+
 
 class Table extends Component {
   render() {
+    const products = [{
+      id: 1,
+      name: "Product1",
+      price: 120
+  }, {
+      id: 2,
+      name: "Product2",
+      price: 80
+  }];
+  const columns = [{
+  dataField: 'id',
+  text: 'Product ID'
+}, {
+  dataField: 'name',
+  text: 'Product Name'
+}, {
+  dataField: 'price',
+  text: 'Product Price'
+}];
     return (
       <div className="Table">
-        <ReactTable striped bordered hover>
-            <thead>
-              <tr>
-                <th>#</th>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>Username</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>1</td>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>@mdo</td>
-              </tr>
-              <tr>
-                <td>2</td>
-                <td>Jacob</td>
-                <td>Thornton</td>
-                <td>@fat</td>
-              </tr>
-              <tr>
-                <td>3</td>
-                <td colSpan={2}>Larry the Bird</td>
-                <td>@twitter</td>
-              </tr>
-            </tbody>
-          </ReactTable>;
+        <BootstrapTable keyField='id' data={ products } columns={ columns } pagination={ paginationFactory() } />
       </div>
     );
   }
