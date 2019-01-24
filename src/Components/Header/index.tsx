@@ -6,17 +6,17 @@ class Header extends Component {
     return (
       <div className="Header">
        <Navbar bg="light" expand="lg">
-          <Navbar.Brand href="#home">React-Bootstrap</Navbar.Brand>
+          <Navbar.Brand href="#home">Top 200 Songs Playlist</Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
-          <Nav className="pull-right">
             <Navbar.Collapse>
-              <Form inline>
-                <FormControl type="text" placeholder="Search" className="mr-sm-2" />
-                <Button variant="outline-success">Search</Button>
-              </Form>
+              <Nav className="ml-auto">
+                <Form inline>
+                  <FormControl type="text" placeholder="Search" className="mr-sm-2" />
+                  <Button variant="outline-success">Search</Button>
+                </Form>
+              </Nav>
             </Navbar.Collapse>
-          </Nav>
-        </Navbar>;
+        </Navbar>
       </div>
     );
   }
