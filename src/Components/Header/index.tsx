@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Navbar, Nav, Form, FormControl, Button } from 'react-bootstrap'
+import "./header.scss";
 
 
 interface headerProps {
@@ -12,9 +13,9 @@ class Header extends Component<headerProps, {}> {
   render() {
     const { onChange, onSubmit, keyword } = this.props;
     return (
-      <div className="Header">
+      <div className="header">
        <Navbar bg="light" expand="lg">
-          <Navbar.Brand href="#home">Top 200 Songs Playlist</Navbar.Brand>
+          <Navbar.Brand href="#home" className="header-text">Top 200 Songs Playlist</Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse>
               <Nav className="ml-auto">
