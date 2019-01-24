@@ -12,13 +12,15 @@ interface appStateInterface{
   topTunes : any,
   type: string,
   show: boolean,
-  musicInfo: any
+  musicInfo: any,
+  keyword: string
 }
+
 
 class App extends Component<{}, appStateInterface> {
   constructor(props: {}){
     super(props);
-    this.state = { topTunes: [], type: 'itune', show: false, musicInfo: {}}
+    this.state = { topTunes: [], type: 'itune', show: false, musicInfo: {}, keyword: ''}
   }
 
   componentDidMount(){
@@ -35,7 +37,15 @@ class App extends Component<{}, appStateInterface> {
     this.setState({
       type
     }, () => api()
-      .then((res) => console.log('res', res))
+      .then((res) => {
+        console.log('status', res.error.status)
+        if(res.error) {
+          window.alert('Something went wrong!')
+        } else {
+          const topTunes = res.feed.entry
+          this.setState({topTunes})
+        }
+      })
       .catch((err) => console.warn('err', err))
       )
   }
@@ -53,11 +63,30 @@ class App extends Component<{}, appStateInterface> {
     })
   }
 
+  onChnage = (event: any) => {
+    const { value } = event.target;
+    this.setState({
+      keyword: value
+    })
+  }
+
+  onSubmit = () => {
+    const { topTunes, keyword } = this.state
+    console.log('keyword', this.state.keyword)
+    let result: any = [];
+    topTunes.forEach(function(o: any){
+      o['im:name'].label && o['im:name'].label.indexOf(keyword) >= 0 && result.push(o)
+    });
+    this.setState({
+      topTunes : result
+    })
+  }
+
   render() {
     const { topTunes, type, show, musicInfo } = this.state
     return (
       <div className="App">
-       <Header />
+       <Header onChange={this.onChnage} onSubmit={this.onSubmit} />
        <BreadCrumb fetchTopTunes={this.fetchTopTunes} type={type} />
        <Table topTunes={topTunes}  viewDetail={this.viewDetail}/>
        <ViewModal show={show} handleClose={() => this.handleClose()} musicInfo={musicInfo}/>

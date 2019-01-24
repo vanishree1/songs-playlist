@@ -1,8 +1,15 @@
 import React, { Component } from 'react';
 import { Navbar, Nav, Form, FormControl, Button } from 'react-bootstrap'
 
-class Header extends Component {
+
+interface headerProps {
+  onChange: (e: any) => void;
+  onSubmit: () => any;
+}
+
+class Header extends Component<headerProps, {}> {
   render() {
+    const { onChange, onSubmit } = this.props;
     return (
       <div className="Header">
        <Navbar bg="light" expand="lg">
@@ -11,8 +18,8 @@ class Header extends Component {
             <Navbar.Collapse>
               <Nav className="ml-auto">
                 <Form inline>
-                  <FormControl type="text" placeholder="Search" className="mr-sm-2" />
-                  <Button variant="outline-success">Search</Button>
+                  <FormControl onChange={(e: any) => onChange(e)} type="text" placeholder="Search by name" className="mr-sm-2" />
+                  <Button variant="outline-secondary" onClick={onSubmit} >Search</Button>
                 </Form>
               </Nav>
             </Navbar.Collapse>
