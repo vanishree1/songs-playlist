@@ -33,15 +33,11 @@ class App extends Component<{}, appStateInterface> {
   }
 
   fetchTopTunes = (type: string) => {
-    // if(type === 'spotify') {
-    //   spotifyApi()
-    // }
     const api = type !== 'itune' ? spotifyApi : ituneApi
     this.setState({
       type
     }, () => api()
       .then((res) => {
-        console.log('result?')
         if(res.error){
           this.setState({
             topTunes: [],
@@ -78,7 +74,6 @@ class App extends Component<{}, appStateInterface> {
 
   onSubmit = () => {
     const { topTunes, keyword } = this.state
-    console.log('keyword', this.state.keyword)
     let result: any = [];
     topTunes.forEach(function(o: any){
       o['im:name'].label && o['im:name'].label.indexOf(keyword) >= 0 && result.push(o)
